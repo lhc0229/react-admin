@@ -1,7 +1,8 @@
 import { useRoutes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import React, {useEffect} from 'react'
-import {createHashHistory} from 'history'
+import React from 'react'
+import { createHashHistory } from 'history'
+import { watch } from 'soul-react'
 
 const Layout = () => {
   const routes = useSelector((state) => {
@@ -26,13 +27,10 @@ const Layout = () => {
 
   const setTitle = (pathname) => {
     const temp = pathname.split('/').filter(item => item)
-    const title = getTitle(all_routes, temp, 0)
-    document.title = title
+    document.title = getTitle(all_routes, temp, 0)
   }
 
-  useEffect(() => {
-    setTitle(pathname)
-  }, [pathname])
+  watch(setTitle, pathname)
 
   return <div>
     {
