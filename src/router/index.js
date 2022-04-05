@@ -5,19 +5,20 @@ import { UploadOutlined } from '@ant-design/icons'
 /* 前台路由*/
 export const front_router = [
   {
-    path: '/front',
+    path: 'front',
+    meta: { title: 'Home' },
     element: lazyLoading(() => import('@/layout/FrontLayout')),
     children: [
       {
         path: '',
-        meta: { title: 'Home', icon: <UploadOutlined /> },
+        meta: { title: 'Home' },
         element: lazyLoading(() => import('@/views/front/Home/index')),
         name: 'front'
       },
       {
         path: '*',
         hidden: true,
-        meta: { title: 'error', icon: <UploadOutlined /> },
+        meta: { title: 'error' },
         element: lazyLoading(() => import('@/views/back/ErrorPage/index'))
       }
     ]
@@ -29,7 +30,7 @@ export const back_router = [
   {
     path: 'bgd',
     element: lazyLoading(() => import('@/layout/BackLayout')),
-    meta: { title: 'bgd', icon: <UploadOutlined /> },
+    meta: { title: 'bgd' },
     children: [
       {
         path: 'dashboard',
@@ -103,6 +104,7 @@ export const other_router = [
         meta: { title: 'error', icon: <UploadOutlined />, roles: ['admin'] },
         element: lazyLoading(() => import('@/views/back/ErrorPage/index'))
       }
+
     ]
   }
 ]
