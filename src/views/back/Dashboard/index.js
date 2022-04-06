@@ -1,23 +1,44 @@
 import React, {useState} from 'react'
 import Show from '@/components/Show'
-import { observerOption } from 'soul-react'
+import { observerOption, lifeCycleOption } from 'soul-react'
 
 const Dashboard = () => {
   const state = {
-    show: false
+    show: true,
+    txt: 'txt'
   }
   const [init_state, setState] = useState(state)
+
   const data = observerOption(init_state, setState)
+
+  const life_cycle = {
+    didMount: () => {
+      data.txt = 2
+      console.log('didMount')
+    },
+    didUnMount: () => {
+      console.log('didUnMount')
+    }
+  }
+
+  lifeCycleOption(life_cycle)
+
   const handleShow = () => {
     data.show = !data.show
   }
+
   return <div>
-    Dashboard
+    <div>
+      Dashboard
+    </div>
     <button onClick={handleShow}>handleShow</button>
     <Show show={data.show}>
       <div slot='body'>555</div>
       <div slot='footer'>88888</div>
     </Show>
+    <div>
+      { data.txt }
+    </div>
   </div>
 }
 
