@@ -9,19 +9,9 @@ const init_state = {
 
 export const user_unique = uuid()
 
-export const mutations = {
-  setToken: (data) => {
-    return (dispatch) => {
-      dispatch({
-        type: user_unique,
-        data: data
-      })
-    }
-  }
-}
-
 const state = (state = init_state, action) => {
   let new_state = state
+  console.log('user_unique')
   if (action.type === user_unique) {
     new_state = {...new_state, ...action.data}
   }

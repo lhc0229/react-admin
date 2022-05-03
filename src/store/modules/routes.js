@@ -8,35 +8,9 @@ const init_state = {
 
 export const routes_unique = uuid()
 
-export const mutations = {
-  setFrontRouter: (data) => {
-    return (dispatch) => {
-      dispatch({
-        type: routes_unique,
-        data: data
-      })
-    }
-  },
-  setBackRouter: (data) => {
-    return (dispatch) => {
-      dispatch({
-        type: routes_unique,
-        data: data
-      })
-    }
-  },
-  setOtherRouter: (data) => {
-    return (dispatch) => {
-      dispatch({
-        type: routes_unique,
-        data: data
-      })
-    }
-  }
-}
-
 const state = (state = init_state, action) => {
   let new_state = state
+  console.log('routes_unique')
   if (action.type === routes_unique) {
     new_state = {...new_state, ...action.data}
   }

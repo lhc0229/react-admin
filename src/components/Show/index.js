@@ -1,8 +1,13 @@
 import React from 'react'
+import {useEffect, useState} from 'react'
 
 const Show = (props) => {
+  const [visible, setShow] = useState(props.show)
+  useEffect(() => {
+    setShow(props.show)
+  }, [props])
   return <div>
-    { props.show ? props.children : '' }
+    { visible ? props.children : '' }
   </div>
 }
 
