@@ -1,70 +1,164 @@
-# Getting Started with Create React App
+## 运行
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```js
+//拉取代码
+git clone https://github.com/lhc0229/react-admin.git
 
-## Available Scripts
+//安装依赖
+npm i
 
-In the project directory, you can run:
+//启动
+npm run dev
+```
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## store
 
-### `npm test`
+对react的状态管理进行了极简的封装，使你能简单的使用状态管理，免去那些繁琐的代码，提高了代码可读性
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+在函数组件中使用状态管理
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```jsx
+import { useSelector, useDispatch } from 'react-redux'
+import { user_unique } from "@/store/modules/user";
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const Demo = ()=>{
+  const dispatch = useDispatch()
 
-### `npm run eject`
+  const user_info = useSelector((state) => {
+      return state.user
+  })
+  
+  dispatch({type:user_unique,data:{token:'89'}}) //更新状态值
+  
+  
+  console.log(user_info.token) //获取store->modules->user 的token值
+  
+  return <div>123</div>
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 代码结构
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+|-- react-admin
+    |-- public
+    |   |-- favicon.ico
+    |   |-- index.html
+    |   |-- logo192.png
+    |   |-- logo512.png
+    |   |-- manifest.json
+    |   |-- robots.txt
+    |-- src
+        |-- index.js
+        |-- logo.svg
+        |-- permission.js  //	路由守卫
+        |-- reportWebVitals.js
+        |-- setupTests.js
+        |-- api
+        |   |-- user.js  //	接口
+        |-- assets
+        |   |-- 404.png
+        |-- components  // 全局组件
+        |   |-- Loading
+        |   |   |-- Loading.js
+        |   |-- SvgIcon	// SVG加载组件
+        |   |   |-- index.js
+        |   |   |-- style.less
+        |   |-- Template
+        |       |-- index.js
+        |-- components-bus
+        |-- env
+        |   |-- index.js // 全局环境变量配置
+        |-- global-funcition
+        |   |-- index.js // 全局函数
+        |-- global-map
+        |   |-- index.js // 全局映射
+        |-- icons
+        |   |-- index.js
+        |   |-- svg  // svg静态资源文件夹
+        |       |-- show-html.svg
+        |-- layout
+        |   |-- index.js 
+        |   |-- back-layout // 后台布局页面
+        |       |-- index.js
+        |       |-- style.less
+        |       |-- breadcrumb // 面包屑
+        |       |   |-- index.js
+        |       |   |-- style.less
+        |       |-- sidebar // 侧边导航栏
+        |           |-- index.js
+        |           |-- style.less
+        |-- router
+        |   |-- index.js // 全局路由
+        |-- store // 状态管理
+        |   |-- index.js
+        |   |-- modules
+        |       |-- app.js
+        |       |-- user.js
+        |-- style
+        |   |-- global.less // 全局样式
+        |   |-- icon.less // 需要对导入每个svg设置宽高
+        |   |-- index.less
+        |   |-- custom-component // 对antd组件进行全局样式重置的组件
+        |       |-- button.less
+        |-- tool-library //第三方的引用
+        |   |-- router
+        |       |-- index.js //封装了一个类似vue路由使用
+        |-- utils
+        |   |-- lazyLoading.js // 组件懒加载实现
+        |   |-- request.js // 全局axios请求封装
+        |   |-- token.js // token设置
+        |-- views
+            |-- 404
+            |   |-- index.js
+            |   |-- style.less
+            |-- backstage // 后台页面文件夹
+            |   |-- dashboard
+            |       |-- index.js
+            |       |-- style.less
+            |-- front // 前台页面文件夹
+            |-- login 
+                |-- index.js
+       |-- .env.development
+       |-- .env.production
+       |-- .gitignore
+       |-- README.md
+       |-- config-overrides.js // 	webpack配置
+       |-- package-lock.json
+       |-- package.json
+```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 待解决的问题
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+### svg图片宽高丢失
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+	使用svg-sprite-loade处理svg时，导致svg的原有的宽高丢失，这个暂时没有解决，只能是对每一个svg单独的设置宽高，目前还没有确定是什么问题，请期待后续更新
+```
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+### 语法检测
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+目前还没有配置eslint，后续将会更新配置eslint
+```
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+CLI
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+后续有计划实现一个cli,一键拉取项目
+```
+
